@@ -1,7 +1,8 @@
 import { faker, } from '@faker-js/faker'
-import { VercelRequest, VercelResponse } from '@vercel/node'
+import type { VercelRequest, VercelResponse } from '@vercel/node'
 
 export const handler = (request: VercelRequest, response: VercelResponse) => {
+  console.log(request)
   const users = Array.from({ length: 50 }, (_, i) => {
     const gender = faker.person.sexType()
     return {

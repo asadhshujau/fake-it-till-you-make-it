@@ -1,17 +1,16 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
-import fs from 'fs';
-import path from 'path';
 
-export default function handler(req: VercelRequest, res: VercelResponse) {
-  const apiDir = path.join(process.cwd(), 'api');
-  const files = fs.readdirSync(apiDir)
-    .filter(file => file.endsWith('.ts') && file !== 'index.ts');
+export default function handler(request: VercelRequest, response: VercelResponse) {
+  console.log(request)
+  const endpoints = [
+    { name: "Users List", url: "/api/users/users" },
+    { name: "Single User", url: "/api/users/user" },
+    { name: "Posts List", url: "/api/posts/posts" },
+    { name: "Single Post", url: "/api/posts/post" },
+    { name: "Comments List", url: "/api/comments/comments" },
+    { name: "Single Comment", url: "/api/comments/comment" }
+  ];
 
-  const endpoints = files.map(file => ({
-    name: file.replace('.ts', ''),
-    url: `/api/${file.replace('.ts', '')}`
-  }));
-
-  res.setHeader("Content-Type", "application/json");
-  res.status(200).json(endpoints);
+  response.setHeader("Content-Type", "application/json");
+  response.status(200).json(endpoints);
 }
